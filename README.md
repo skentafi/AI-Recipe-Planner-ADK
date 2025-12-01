@@ -1,7 +1,37 @@
-# AI-Recipe-Planner-ADK
+# AI‑Recipe‑Planner‑ADK
 
-AI-Recipe-Planner-ADK is a capstone project built with the Google Agent Development Kit (ADK).  
-It generates personalized recipes based on pantry items and dietary preferences, ensuring resilient JSON outputs even with sparse or conflicting inputs.
+GitHub Repository: [https://github.com/skentafi/AI-Recipe-Planner-ADK](https://github.com/skentafi/AI-Recipe-Planner-ADK.git)
+
+## Project Description
+AI‑Recipe‑Planner‑ADK is a concierge agent built with the Google Agent Development Kit (ADK).  
+It generates personalized recipes based on pantry items and dietary preferences, ensuring structured JSON outputs.
+
+## Problem Statement
+Meal planning is often frustrating when pantry items are limited or diets are restrictive.  
+This agent solves that by automatically generating valid, diet‑aware recipes.
+
+## Why Agents?
+Agents handle uncertainty gracefully: they interpret inputs, apply schema validation, and guarantee structured outputs.
+
+## What Was Built
+- Google ADK for orchestration
+- Python for core logic
+- Pydantic for schema validation
+- Pytest for automated testing
+- FastAPI (planned) for service integration
+
+## Demo
+Example input: `["tomato", "spinach", "rice"]` with diet `"vegan"`  
+Produces a structured JSON recipe object (see full demo in repo).
+
+## Future Work
+- FastAPI endpoints
+- Simple UI
+- Nutritional analysis
+- Weekly meal planning
+- Media gallery support
+- Session persistence and learning
+- More ADK features (multi‑agent collaboration, context memory)
 
 ---
 
@@ -18,9 +48,9 @@ Install dependencies with:
 
 ```bash
 pip install -r requirements.txt
-
+```
 ## Key packages:
--fastapi==0.121.3
+- fastapi==0.121.3
 - uvicorn[standard]==0.38.0
 - python-dotenv==1.2.1
 - pytest==9.0.1
@@ -29,16 +59,18 @@ pip install -r requirements.txt
 - google-adk[a2a]==1.19.0
 
 ##🚀 Usage
+```
 Run the main harness to generate a recipe:
 bash
 python main.py
 Or run the tests:
 bash
 pytest
+```
 
 ## Example Output
 Running main.py with pantry items ["tomato", "spinach", "rice"] and diet "vegan" produces:
-
+```
 {
   "title": "Vegan Rice Pilaf with Sautéed Vegetables",
   "ingredients": [
@@ -62,7 +94,8 @@ Running main.py with pantry items ["tomato", "spinach", "rice"] and diet "vegan"
     {"step_number": 8, "instruction": "Serve hot."}
   ]
 }
-
+```
+---
 
 ## 📌 Notes
 Evaluators can run main.py directly or add new tests in test_recipe_pipeline_unit.py.
