@@ -25,6 +25,8 @@ pip install -r requirements.txt
 - python-dotenv==1.2.1
 - pytest==9.0.1
 - requests==2.32.5
+- pydantic==2.11.5
+- google-adk[a2a]==1.19.0
 
 ##🚀 Usage
 Run the main harness to generate a recipe:
@@ -68,7 +70,3 @@ Evaluators can run main.py directly or add new tests in test_recipe_pipeline_uni
 Future versions will include a FastAPI service for API access.
 
 
-
-pydantic==2.11.5
-
-google-adk[a2a]==1.19.0
