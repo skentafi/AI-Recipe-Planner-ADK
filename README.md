@@ -1,6 +1,6 @@
 # AI‑Recipe‑Planner‑ADK
 
-GitHub Repository: [https://github.com/skentafi/AI-Recipe-Planner-ADK](https://github.com/skentafi/AI-Recipe-Planner-ADK.git)
+GitHub Repository: [AI-Recipe-Planner-ADK](https://github.com/skentafi/AI-Recipe-Planner-ADK.git)
 
 ## Project Description
 AI‑Recipe‑Planner‑ADK is a concierge agent built with the Google Agent Development Kit (ADK).  
@@ -65,7 +65,7 @@ bash
 python main.py
 Or run the tests:
 bash
-pytest
+pytest 
 ```
 
 ## Example Output
@@ -100,6 +100,21 @@ Running main.py with pantry items ["tomato", "spinach", "rice"] and diet "vegan"
 ## 📌 Notes
 Evaluators can run main.py directly or add new tests in test_recipe_pipeline_unit.py.
 
-Future versions will include a FastAPI service for API access.
+## Future Work
+- FastAPI endpoints
+
+- Simple UI
+
+- Nutritional analysis
+
+- Weekly meal planning
+
+- Media gallery support
+
+- Session persistence and learning
+
+- More ADK features (multi‑agent collaboration, context memory)
+
+- Vision statement: With more time, these extensions would transform the planner into a full ecosystem for adaptive, health‑aware meal planning — combining structured recipes, nutritional insights, and interactive interfaces into a resilient agent platform.
 
 
