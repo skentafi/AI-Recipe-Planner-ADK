@@ -1,4 +1,5 @@
 # agents/recipe_pipeline.py
+import logging
 from google.adk.agents import Agent, SequentialAgent
 from google.adk.runners import InMemoryRunner
 from agents import inventory_agent, diet_agent, planner_agent
@@ -21,6 +22,15 @@ async def run_recipe_pipeline(pantry_items: list[str], diet: str):
     # Wrap the root pipeline agent in an InMemoryRunner
     runner = InMemoryRunner(agent=recipe_pipeline)
 
+    # # Run the pipeline with structured input
+    # response = await runner.run_debug(
+    #     {
+    #         "pantry_items": pantry_items,
+    #         "diet": diet,
+    #     }
+    # )
+
+    logging.debug(f"Running recipe pipeline with pantry={pantry_items}, diet={diet}")
     # Run the pipeline with structured input
     response = await runner.run_debug(
         {
@@ -28,4 +38,7 @@ async def run_recipe_pipeline(pantry_items: list[str], diet: str):
             "diet": diet,
         }
     )
+    logging.info(f"Pipeline response: {response}")
+
+
     return response

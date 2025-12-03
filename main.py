@@ -7,10 +7,31 @@ import asyncio
 from google.genai import types
 from google.adk.runners import InMemoryRunner
 from config.app_config import APP_NAME, USER_ID, MODEL_NAME, retry_config, session_service, SESSION_ID, setup_session
+import logging
+import os
+
+def setup_logging():
+    for log_file in ["logger.log"]:
+        if os.path.exists(log_file):
+            os.remove(log_file)
+
+    logging.basicConfig(
+        filename="logger.log",
+        # level=logging.DEBUG,
+        # switch from DEBUG to INFO to reduce verbosity
+        # cut out the noisy TCP/TLS traces and kept only the essentials:
+        # Startup confirmation: Logging configured for Recipe Pipeline
+        # Model requests: each time Gemini is called, you see the request/response cycle.
+        # Pipeline outputs: the final structured recipe JSON output from the pipeline
+        level=logging.INFO, 
+        format="%(asctime)s %(filename)s:%(lineno)d %(levelname)s:%(message)s",
+    )
+    logging.info("✅ Logging configured for Recipe Pipeline")
+
 
 async def main():
     """
-    Entry point for testing the recipe_pipeline agent with the ADK InMemoryRunner.
+    Entry point for testing the recipe_pipeline agent with the ADK SequentialAgent and InMemoryRunner.
 
     Steps performed:
     1. Construct an InMemoryRunner bound to the recipe_pipeline agent and the configured app name.
@@ -24,7 +45,9 @@ async def main():
     The function prints both the raw agent output and the parsed JSON to verify that the pipeline
     produces valid, structured recipe data.
     """
-        
+
+    setup_logging()
+
     # Step 1: Construct the runner
     runner = InMemoryRunner(agent=recipe_pipeline, app_name=APP_NAME)
 
@@ -56,8 +79,22 @@ async def main():
             }))]
         )
     ):
+        # Log the raw event class/type for visibility
+        logging.debug(f"Event received: {type(event).__name__}")
+
+        # Final response case
         if event.is_final_response() and event.content and event.content.parts:
-            final_response = event.content.parts[0].text
+            response_text = event.content.parts[0].text
+            agent_name = getattr(event, "source_agent", "UnknownAgent")
+            logging.info(f"Final response from {agent_name}: {response_text}")
+            final_response = response_text  # keep the latest full response
+        # Intermediate content case
+        elif event.content:
+            logging.debug(f"Intermediate content: {event.content}")
+        # Catch-all for other event types
+        else:
+            logging.warning(f"Unhandled event: {event}")
+
 
     # Step 4: Print results
     print("Raw agent output:", final_response)
