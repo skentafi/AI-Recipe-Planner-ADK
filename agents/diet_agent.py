@@ -1,26 +1,15 @@
-from pydantic import BaseModel
 from typing import List
-from pydantic import BaseModel, Field
 from google.genai import types
 from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import Runner   
-import json, uuid
+from models.diet_schemas import DietInput, DietResponse
+import json
 from config.app_config import APP_NAME, USER_ID, MODEL_NAME, retry_config, session_service, SESSION_ID
 
 from dotenv import load_dotenv
 
 load_dotenv() # Load environment variables from .env file
-
-# --- Input / Output Schemas ---
-class DietInput(BaseModel):
-    items: List[str] = Field(..., description="List of available ingredients")
-    diet: str = Field(..., description="Diet type such as 'vegan', 'keto', 'vegetarian'")
-
-class DietResponse(BaseModel):
-    compatible_items: List[str] = Field(..., description="Items compatible with the specified diet")
-    suggested_recipe_ideas: List[str] = Field(..., description="List of recipe ideas based on compatible items")
-
 
 # --- Agent definition ---
 diet_agent = LlmAgent(

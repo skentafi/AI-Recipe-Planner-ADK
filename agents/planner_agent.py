@@ -7,32 +7,12 @@ from google.adk import Agent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import Runner
 from google.adk.tools import google_search
-import json, uuid
+import json
+from models.planner_schemas import PlannerInput, PlannerResponse
 from config.app_config import APP_NAME, USER_ID, MODEL_NAME, retry_config, session_service, SESSION_ID
 from dotenv import load_dotenv
 
 load_dotenv() # Load environment variables from .env file
-
-class PlannerInput(BaseModel):
-    """
-    Input for PlannerAgent: diet-safe items and recipe ideas.
-    """
-    compatible_items: List[str] = Field(..., description="Items compatible with the specified diet")
-    suggested_recipe_ideas: List[str] = Field(..., description="List of recipe ideas based on compatible items")
-    diet: str = Field(..., description="Diet type carried forward for context")
-
-class Step(BaseModel):
-    """Represents a single step in the cooking recipe."""
-    step_number: int = Field(..., description="Step number in sequence")
-    instruction: str = Field(..., description="Instruction for this step")
-
-class PlannerResponse(BaseModel):
-    """
-    Output of PlannerAgent: a complete meal recipe with ingredients and step-by-step instructions.
-    """
-    title: str = Field(..., description="Title of the recipe")
-    ingredients: List[str] = Field(..., description="List of ingredients required")
-    steps: List[Step] = Field(..., description="Step-by-step cooking instructions")
 
 # async def search_tool(query: str):
 #     return await google_search({"query": query})

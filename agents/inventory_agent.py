@@ -1,7 +1,8 @@
 # from models import InventoryResponse, InventoryInput
 from config.app_config import APP_NAME, USER_ID, MODEL_NAME, retry_config, session_service, SESSION_ID
 from typing import List
-import json, os, asyncio, uuid
+import json, os, asyncio
+from models.inventory_schemas import InventoryInput, InventoryResponse
 from pydantic import BaseModel, Field
 from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
@@ -26,29 +27,6 @@ load_dotenv() # Load environment variables from .env file
 # }
 # """
 
-# --- Input and Response schemas ---
-
-# class InventoryInput(BaseModel):
-#     """
-#     Represents user input: a list of ingredients.
-#     Example: {"items": ["chicken", "apple", " ", "??"]}
-#     """
-#     items: List[str] = Field(
-#         ...,
-#         description="List of raw ingredient names to be cleaned. "
-#                     "Trim whitespace, drop invalid entries."
-#     )
-
-# class InventoryResponse(BaseModel):
-#     usable_items: List[str] = Field(
-#         ...,
-#         description="Array of valid, non-empty ingredients suitable for cooking."
-#     )
-#     message: str = Field(
-#         ...,
-#         description="Short confirmation string summarizing the cleaning result."
-#     )
-
 # --- Prompt builder ---
 # def create_prompt(user_input: InventoryInput) -> str:
 #     return (
@@ -58,7 +36,6 @@ load_dotenv() # Load environment variables from .env file
 #         "  usable_items: an array of non-empty, valid ingredients (trim whitespace, drop invalid entries)\n"
 #         "  message: a short confirmation string\n"
 #     )
-
 
 
 # --- Constants ---
@@ -72,54 +49,6 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 if not API_KEY:
     raise ValueError("Missing GEMINI_API_KEY in environment")
 
-# --- Schemas ---
-# class InventoryInput(BaseModel):
-#     """
-#     Represents user input: a list of ingredients.
-#     Example: {"items": ["chicken", "apple", " ", "??"]}
-#     """
-#     items: List[str] = Field(
-#         ...,
-#         description="List of raw ingredient names to be cleaned. Trim whitespace, drop invalid entries."
-#     )
-
-# class InventoryResponse(BaseModel):
-#     usable_items: List[str] = Field(
-#         ...,
-#         description="Array of valid, non-empty ingredients suitable for cooking."
-#     )
-#     message: str = Field(
-#         ...,
-#         description="Short confirmation string summarizing the cleaning result."
-#     )
-
-class InventoryInput(BaseModel):
-    """
-    Represents user input: a list of ingredients and diet type.
-    Example: {"items": ["chicken", "apple", " ", "??"], "diet": "keto"}
-    """
-    items: List[str] = Field(
-        ...,
-        description="List of raw ingredient names to be cleaned. Trim whitespace, drop invalid entries."
-    )
-    diet: str = Field(
-        ...,
-        description="Diet type such as 'vegan', 'keto', 'vegetarian'. Passed through to DietAgent."
-    )
-
-class InventoryResponse(BaseModel):
-    usable_items: List[str] = Field(
-        ...,
-        description="Array of valid, non-empty ingredients suitable for cooking."
-    )
-    diet: str = Field(
-        ...,
-        description="Diet type passed through for downstream agents."
-    )
-    message: str = Field(
-        ...,
-        description="Short confirmation string summarizing the cleaning result."
-    )
 
 """
 Configure Retry Options
