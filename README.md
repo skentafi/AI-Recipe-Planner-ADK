@@ -20,19 +20,6 @@ Agents handle uncertainty gracefully: they interpret inputs, apply schema valida
 - Pytest for automated testing
 - FastAPI (planned) for service integration
 
-## Demo
-Example input: `["tomato", "spinach", "rice"]` with diet `"vegan"`  
-Produces a structured JSON recipe object (see full demo in repo).
-
-## Future Work
-- FastAPI endpoints
-- Simple UI
-- Nutritional analysis
-- Weekly meal planning
-- Media gallery support
-- Session persistence and learning
-- More ADK features (multi‑agent collaboration, context memory)
-
 ---
 
 ## ✨ Features
@@ -41,15 +28,26 @@ Produces a structured JSON recipe object (see full demo in repo).
 - Resilient pipeline: Guarantees valid JSON output with fallback logic.
 - Testing harness: Includes unit tests to validate recipe generation.
 
----
 
-## 🛠️ Requirements
+----
+
+# Steps to Run the Application:
+
+## Clone the Repository:
+```
+git clone https://github.com/skentafi/AI-Recipe-Planner-ADK.git
+
+cd AI-Recipe-Planner-ADK
+```
+## Requirements
 Install dependencies with:
 
-```bash
+```
+bash
 pip install -r requirements.txt
 ```
 ## Key packages:
+```
 - fastapi==0.121.3
 - uvicorn[standard]==0.38.0
 - python-dotenv==1.2.1
@@ -57,19 +55,21 @@ pip install -r requirements.txt
 - requests==2.32.5
 - pydantic==2.11.5
 - google-adk[a2a]==1.19.0
-
-##🚀 Usage
 ```
+
+## Usage
+
 Run the main harness to generate a recipe:
+```
 bash
 python main.py
 Or run the tests:
 bash
 pytest 
 ```
-
-## Example Output
-Running main.py with pantry items ["tomato", "spinach", "rice"] and diet "vegan" produces:
+---
+## Demo and Example Output
+Running main.py with pantry items ["tomato", "spinach", "rice", "chicken breasts"] and diet "vegan", produces:
 ```
 {
   "title": "Vegan Rice Pilaf with Sautéed Vegetables",
@@ -115,6 +115,6 @@ Evaluators can run main.py directly or add new tests in test_recipe_pipeline_uni
 
 - More ADK features (multi‑agent collaboration, context memory)
 
-- Vision statement: With more time, these extensions would transform the planner into a full ecosystem for adaptive, health‑aware meal planning — combining structured recipes, nutritional insights, and interactive interfaces into a resilient agent platform.
+- Vision statement: With more time, these extensions would transform the planner into a full ecosystem for adaptive, health‑aware meal planning, combining structured recipes, nutritional insights, and interactive interfaces into a resilient agent platform.
 
 

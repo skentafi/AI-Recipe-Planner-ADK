@@ -24,6 +24,7 @@ async def test_recipe_pipeline_generates_valid_json():
     """
     runner = InMemoryRunner(agent=recipe_pipeline, app_name=APP_NAME)
 
+    # without await the session is not created and tests fail by session inexistant
     await runner.session_service.create_session(
         app_name=APP_NAME,
         user_id=USER_ID,

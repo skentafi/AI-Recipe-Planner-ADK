@@ -1,20 +1,21 @@
 """
-Integration Tests for Inventory Routes
---------------------------------------
+Integration tests for the Inventory API route.
 
-This module contains integration tests that validate the FastAPI endpoints
-exposed by the Inventory Agent. Tests send HTTP requests to the running
-application (via TestClient) and verify end-to-end behavior.
+This module validates the current `/inventory` endpoint using FastAPI's
+TestClient, sending in-memory HTTP requests to the running application
+instance imported from `main`.
 
-Tests focus on:
-    - Status code and JSON response validation.
-    - Presence and types of required keys: usable_items, message.
-    - Scenario-specific checks, such as vegan diets excluding non-vegan items (if implemented).
-    - Handling of empty input lists.
+The tests verify:
+    - Correct HTTP status codes and JSON response structure.
+    - Required response fields (`usable_items`, `message`) and their types.
+    - Basic diet-aware filtering behavior when applicable (e.g., vegan inputs).
+    - Proper handling of empty or whitespace-only item lists.
 
-These tests ensure that route wiring, request validation, and response
-serialization all work correctly when the API is deployed.
+These tests reflect the existing Inventory implementation and ensure that
+routing, request parsing, and response serialization behave as expected
+without modifying the underlying agent or runner structure.
 """
+# File: tests/test_inventory_integration.py
 
 # tests/test_inventory_agent_pytest.py
 # run the test using: pytest main_tests.py -v ## -v → verbose mode, shows each test name and result.
@@ -26,7 +27,7 @@ import pytest
 from fastapi.testclient import TestClient
 # from app.main import app
 import main
-from main import app
+from tests.test_main import app
 
 
 client = TestClient(app)
@@ -50,7 +51,7 @@ def test_inventory_route_basic():
     Integration test: send payload to /inventory and validate response structure.
     """
     payload = {"items": ["tomato", "chicken breast", "spinach"], "diet": "vegan"}
-    response = client.post("/inventory", json=payload)
+    response = client.post("/api/inventory", json=payload)
 
     assert response.status_code == 200
     body = response.json()
@@ -68,7 +69,7 @@ def test_inventory_route_empty_items():
     Integration test: empty items should return usable_items == []
     """
     payload = {"items": ["", " ", ""], "diet": "vegan"}
-    response = client.post("/inventory", json=payload)
+    response = client.post("/api/inventory", json=payload)
 
     assert response.status_code == 200
     body = response.json()

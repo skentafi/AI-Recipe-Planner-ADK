@@ -71,13 +71,6 @@ planner_runner = Runner(
 )
 
 async def run_planner(compatible_items: List[str], suggested_recipe_ideas: List[str], diet: str) -> PlannerResponse:
-
-    # await session_service.create_session(
-    #     app_name=APP_NAME,
-    #     user_id=USER_ID,
-    #     session_id=SESSION_ID
-    # )
-
     # Build user message from schema
     query_json = PlannerInput(
         compatible_items=compatible_items,
